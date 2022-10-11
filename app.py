@@ -28,7 +28,7 @@ def insert_a_philosopher():
     invalid = check_endpoint_info(request.json, ['philosopher_name', 'philosopher_bio',
      'philosopher_date_of_birth', 'philosopher_date_of_death', 'philosopher_image'])
     if(invalid != None):
-        return make_response(json.dumps(invalid), 400)
+        return make_response(json.dumps(invalid, default=str), 400)
 # calls the procedure insert_quote and takes in 5 arguements from the user, philosopher_name and philosopher_bio philosopher_date_of_birth
 #philosopher_date_of_death philosopher_image
     results = dbhelper.run_statment('CALL insert_philosopher(?,?,?,?,?)',[
@@ -53,7 +53,7 @@ def return_philosopher_quotes():
 #checks the endpoint for args and stores info as variable invalid, if invalid is not equal to none it will return an error
     invalid = check_endpoint_info(request.args, ['philosopher_id'])
     if(invalid != None):
-        return make_response(json.dumps(invalid), 400)
+        return make_response(json.dumps(invalid, default=str), 400)
 # calls the procedure insert_quote and takes in  arguements from the user philosopher_id  
     results = dbhelper.run_statment('CALL show_philosopher_quote(?)',
     [request.args.get('philosopher_id')])
@@ -76,7 +76,7 @@ def inset_philosopher_quote():
 # #checks the endpoint for json and stores info as variable invalid, if invalid is not equal to none it will return an error
     invalid = check_endpoint_info(request.json, ['quote_content', 'philosopher_id'])
     if(invalid != None):
-        return make_response(json.dumps(invalid), 400)
+        return make_response(json.dumps(invalid, default=str), 400)
 # calls the procedure insert_quote and takes in 2 arguements from the user quote_content and philosopher_id
     results = dbhelper.run_statment('CALL insert_quote(?,?)', 
     [request.json.get('quote_content'), request.json.get('philosopher_id')])
