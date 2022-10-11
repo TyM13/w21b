@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 5.5.62, for Win64 (AMD64)
+-- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
 -- Host: localhost    Database: w21b
 -- ------------------------------------------------------
@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -21,7 +21,7 @@
 
 DROP TABLE IF EXISTS `philosopher`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `philosopher` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(40) COLLATE utf8mb4_bin DEFAULT NULL,
@@ -50,7 +50,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `quote`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `quote` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `philosopher_id` int(10) unsigned NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE `quote` (
   PRIMARY KEY (`id`),
   KEY `quote_FK` (`philosopher_id`),
   CONSTRAINT `quote_FK` FOREIGN KEY (`philosopher_id`) REFERENCES `philosopher` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +67,7 @@ CREATE TABLE `quote` (
 
 LOCK TABLES `quote` WRITE;
 /*!40000 ALTER TABLE `quote` DISABLE KEYS */;
-INSERT INTO `quote` VALUES (1,1,'“There is only one good, knowledge, and one evil, ignorance” '),(2,1,'“The unexamined life is not worth living”'),(3,1,'“The only thing I know is that I know nothing”'),(13,3,'“No man\'s knowledge here can go beyond his experience”'),(14,3,'“The mind is furnished with ideas by experience alone”');
+INSERT INTO `quote` VALUES (1,1,'“There is only one good, knowledge, and one evil, ignorance” '),(2,1,'“The unexamined life is not worth living”'),(3,1,'“The only thing I know is that I know nothing”'),(13,3,'“No man\'s knowledge here can go beyond his experience”'),(14,3,'“The mind is furnished with ideas by experience alone”'),(16,3,'quote_content');
 /*!40000 ALTER TABLE `quote` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +155,8 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `show_philosopher_quote`(philosopher_id_input int unsigned)
 begin
 select q.content, q.id, p.name 
-	from philosopher p inner join `quote` q where q.philosopher_id =philosopher_id_input;
+	from philosopher p inner join `quote` q on q.philosopher_id=p.id
+where q.philosopher_id =philosopher_id_input;
 end ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -172,4 +173,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-10 22:59:32
+-- Dump completed on 2022-10-11 17:07:57
